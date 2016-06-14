@@ -1,0 +1,41 @@
+module Jeux {
+
+    struct Joueur{
+        long id;
+        string pseudo;
+        string password;
+        string totalScore;
+    };
+    typedef sequence<Joueur> listeJoueurs;
+    typedef sequence<Joueur> listeClassement;
+
+    struct Partie{
+        long id;
+        long nbJoueurs;
+        long nbCarte;
+        listeJoueurs joueurs;
+
+    };
+    typedef sequence<Partie> listePartiesEnAttente;
+
+    struct Carte{
+            string valeur;
+    };
+
+    interface IConnexionRemote{
+         boolean seConnecter( in string pseudo, in string mdp);
+         boolean seDeconnecter(in Joueur joueur);
+    };
+    interface IJoueurRemote{
+        Joueur creerUnCompte( in string pseudo, in string mdp);
+        string voirLeScore( in Joueur joueur);
+        listeClassement voirClassementJoueur();
+        listeJoueurs voirJoueursConnectes();
+    };
+    interface IPartieRemote{
+        listePartiesEnAttente partiesEnAttente();
+        Partie creerPartie(in long nbJoueurs);
+        listeJoueurs voirJoueursEnPartie( in Partie partie);
+    };
+
+};
